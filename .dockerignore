@@ -1,0 +1,32 @@
+# --- Build Artifacts ---
+target/
+build/
+bin/
+out/
+.gradle/
+
+# --- IDEs ---
+.idea/
+*.iml
+.vscode/
+.settings/
+.project
+.classpath
+.nb-gradle/
+
+# --- Version Control ---
+.git/
+.gitignore
+.gitattributes
+
+# --- Logs & OS Files ---
+*.log
+.DS_Store
+Thumbs.db
+
+# --- Docker & Secrets ---
+.env
+Dockerfile
+docker-compose.yml
+docker-compose.override.yml
+
