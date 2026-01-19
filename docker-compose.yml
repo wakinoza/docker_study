@@ -2,23 +2,19 @@ services:
   app:
     build: .
     ports:
-      - "8080:8080"
+      - "${APP_PORT}:8080"
     environment:
-      - DB_HOST=db
-      - DB_NAME=sample_db
-      - DB_USER=root
-      - DB_PASSWORD=password
+      - DB_HOST=${DB_HOST}
+      - DB_NAME=${DB_NAME}
+      - DB_USER=${DB_USER}
+      - DB_PASSWORD=${DB_PASSWORD}
     depends_on:
       - db
 
   db:
     image: mysql:8.0
     environment:
-      - MYSQL_DATABASE=sample_db
-      - MYSQL_ROOT_PASSWORD=password
+      - MYSQL_DATABASE=${DB_NAME}
+      - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
     ports:
       - "3306:3306"
-
-volumes:
-  mysql000vol11:
-  wordpress000vol12:
