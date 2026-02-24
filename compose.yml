@@ -1,18 +1,19 @@
 services:
-  app-alpha:
-    image: alpine
-    container_name: container-alpha
-    tty: true
+  web-server:
+    image: nginx:alpine
+    container_name: my-web-server
+    ports:
+      - "8080:80"
     volumes:
-      - shared-storage:/data/shared
+      - shared-storage:/usr/share/nginx/html
 
-  app-beta:
+  client-node:
     image: alpine
-    container_name: container-beta
+    container_name: my-client
     tty: true
+    command: sh -c "apk add --no-cache curl && sh"
     volumes:
       - shared-storage:/data/shared
 
 volumes:
   shared-storage:
-    driver: local
