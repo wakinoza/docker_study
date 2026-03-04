@@ -1,9 +1,12 @@
 services:
-  web-server:
+  log-app:
     image: nginx:alpine
-    container_name: log-demo-nginx
+    container_name: logging-driver-demo
     ports:
-      - "8080:80"
-    volumes:
-      # ホストの ./logs フォルダを コンテナの nginxログ保存先にマウント
-      - ./logs:/var/log/nginx
+      - "8081:80"
+    # ここからが Logging Driver の設定
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10k"   # テスト用に極端に小さく設定（通常は 10m など）
+        max-file: "3"     # 最大3ファイルまで保持（それ以上は古い順に削除）
