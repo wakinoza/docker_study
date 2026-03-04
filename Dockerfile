@@ -1,27 +1,8 @@
-# --- リファクタリング後 ---
-# --- ステージ1：ビルド用 ---
-FROM eclipse-temurin:21-jdk-alpine AS builder
+# 1. ベースにするイメージ（今回は軽量なAlpine Linux）
+FROM alpine:latest
 
-WORKDIR /app
+# 2. 自分の好きなツールをインストール（例: curl と mysql-client）
+RUN apk add --no-cache curl mysql-client
 
-COPY Main.java .
-
-# コンパイルを実行
-RUN javac Main.java
-
-
-# --- ステージ2：実行用 ---
-# 実行には JDK ではなく、より軽量な JRE を使用
-FROM eclipse-temurin:21-jre-alpine
-
-WORKDIR /app
-
-# セキュリティのため、実行用のユーザーを作成
-RUN addgroup -S appgroup && adduser -S appuser -G appgroup
-USER appuser
-
-# ビルドステージからコンパイル済みの .class ファイルだけをコピー
-COPY --from=builder /app/Main.class .
-
-# 実行コマンド
-CMD ["java", "Main"]
+# 3. コンテナ起動時に実行されるデフォルトコマンド
+CMD ["sh"]
