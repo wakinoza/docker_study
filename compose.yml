@@ -1,12 +1,9 @@
 services:
-  db:
-    image: mysql:8.4
-    container_name: my-mysql-db
-    environment:
-      MYSQL_ROOT_PASSWORD: password
-      MYSQL_DATABASE: test_db
+  web-server:
+    image: nginx:alpine
+    container_name: log-demo-nginx
+    ports:
+      - "8080:80"
     volumes:
-      - mysql-data:/var/lib/mysql
-
-volumes:
-  mysql-data:
+      # ホストの ./logs フォルダを コンテナの nginxログ保存先にマウント
+      - ./logs:/var/log/nginx
