@@ -1,8 +1,5 @@
-# 1. ベースにするイメージ（今回は軽量なAlpine Linux）
-FROM alpine:latest
+# ベースイメージを指定
+FROM my-standard-base:1.0
 
-# 2. 自分の好きなツールをインストール（例: curl と mysql-client）
-RUN apk add --no-cache curl mysql-client
 
-# 3. コンテナ起動時に実行されるデフォルトコマンド
-CMD ["sh"]
+CMD ["cat", "/app/src/hello.txt"]
