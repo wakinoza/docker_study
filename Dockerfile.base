@@ -1,0 +1,7 @@
+FROM alpine:latest
+
+# 開発部門が使うツールのインストール（運用側の標準化）
+RUN apk add --no-cache bash
+
+ONBUILD COPY . /app/src
+ONBUILD RUN echo "ベースイメージ側のONBUILDによって、アプリのソースがコピーされました。"
