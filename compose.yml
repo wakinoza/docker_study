@@ -1,6 +1,15 @@
 services:
-  web:
+  # 負荷分散を行うロードバランサー（入口）
+  lb:
     image: nginx:alpine
-    # ホスト側のポート固定をせず、Dockerに割り当てを任せるのがポイント
     ports:
-      - "80"
+      - "8080:80"
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf:ro
+    depends_on:
+      - web
+
+  # スケールさせるWebサーバー
+  web:
+    image: hashicorp/http-echo
+    command: ["-text", "Hello! This is response from container."]
