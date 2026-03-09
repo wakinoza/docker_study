@@ -1,15 +1,20 @@
 services:
-  # 負荷分散を行うロードバランサー（入口）
   lb:
     image: nginx:alpine
     ports:
       - "8080:80"
     volumes:
       - ./nginx.conf:/etc/nginx/nginx.conf:ro
-    depends_on:
-      - web
 
-  # スケールさせるWebサーバー
   web:
-    image: hashicorp/http-echo
-    command: ["-text", "Hello! This is response from container."]
+    image: nginx:alpine
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost/health"]
+      interval: 5s     # 5秒おきにチェック
+      timeout: 3s      # 3秒待ってダメなら失敗
+      retries: 3       # 3回連続失敗で「Unhealthy（異常）」とみなす
+      start_period: 5s # 起動直後の5秒間はチェックを猶予
+    command: >
+      /bin/sh -c "echo 'OK' > /usr/share/nginx/html/health;
+                  echo 'I am healthy' > /usr/share/nginx/html/index.html;
+                  nginx -g 'daemon off;'"
