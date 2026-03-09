@@ -1,5 +1,4 @@
-# ベースイメージを指定
-FROM my-standard-base:1.0
+FROM alpine:latest
 
-
-CMD ["cat", "/app/src/hello.txt"]
+ENTRYPOINT ["echo", "I am running:"]
+CMD ["the default command"]
