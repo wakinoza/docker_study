@@ -1,12 +1,6 @@
 services:
-  log-app:
+  web:
     image: nginx:alpine
-    container_name: logging-driver-demo
+    # ホスト側のポート固定をせず、Dockerに割り当てを任せるのがポイント
     ports:
-      - "8081:80"
-    # ここからが Logging Driver の設定
-    logging:
-      driver: "json-file"
-      options:
-        max-size: "10k"   # テスト用に極端に小さく設定（通常は 10m など）
-        max-file: "3"     # 最大3ファイルまで保持（それ以上は古い順に削除）
+      - "80"
