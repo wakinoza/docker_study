@@ -1,10 +1,10 @@
 # syntax=docker/dockerfile:1
 FROM alpine:latest
 
-RUN <<EOF
-  apk update
-  apk add --no-cache curl
-  echo "Setup complete!"
+COPY <<EOF /etc/hello.conf
+message=Hello World
+version=1.0
+env=production
 EOF
 
-CMD ["curl", "--version"]
+CMD ["cat", "/etc/hello.conf"]
