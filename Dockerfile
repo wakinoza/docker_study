@@ -1,4 +1,10 @@
+# syntax=docker/dockerfile:1
 FROM alpine:latest
 
-ENTRYPOINT ["echo", "I am running:"]
-CMD ["the default command"]
+RUN <<EOF
+  apk update
+  apk add --no-cache curl
+  echo "Setup complete!"
+EOF
+
+CMD ["curl", "--version"]
