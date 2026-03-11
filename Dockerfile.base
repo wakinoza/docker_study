@@ -1,7 +1,7 @@
 FROM alpine:latest
 
-# 開発部門が使うツールのインストール（運用側の標準化）
-RUN apk add --no-cache bash
+# ベースイメージ自体のビルド時に実行されるもの
+RUN echo "Base image is being built..."
 
-ONBUILD COPY . /app/src
-ONBUILD RUN echo "ベースイメージ側のONBUILDによって、アプリのソースがコピーされました。"
+# 派生イメージのビルド時に初めて実行されるもの
+ONBUILD RUN echo "Derived image build started at: $(date)" > /build_info.txt
